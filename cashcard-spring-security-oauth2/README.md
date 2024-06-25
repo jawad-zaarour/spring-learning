@@ -7,19 +7,19 @@ the development of secure REST APIs using the OAuth 2.0 authorization protocol.
 ### GET One Cash Card by ID
 
 ```shell
-curl -X GET "http://localhost:8081/cashcards/{id}"
+curl -u user:{password-generated-by-spring} "http://localhost:8081/cashcards/1"
 ```
 
 ### GET All Cash Cards
 
 ```shell
-curl -X GET "http://localhost:8081/cashcards"
+curl -u user:{password-generated-by-spring} "http://localhost:8081/cashcards"
 ```
 
 ### POST a cashcard
 
 ```shell
-curl -X POST "http://localhost:8081/cashcards" -H "Authorization: bearer $TOKEN" \
+curl -u user:{password-generated-by-spring} -X POST "http://localhost:8081/cashcards" \
 -H "Content-Type: application/json" \
 -d '{"amount": 50.89, "owner": "sarah1"}'
 ```
