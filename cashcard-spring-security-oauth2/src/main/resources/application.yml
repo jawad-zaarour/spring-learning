@@ -7,6 +7,7 @@ spring:
       resourceserver:
         jwt:
           public-key-location: classpath:authz.pub
+          audiences: cashcard-client #  ensure that each JWT contains an aud claim with a value of cashcard-client.
 
 logging:
   level:
