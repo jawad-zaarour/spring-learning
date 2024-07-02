@@ -1,5 +1,6 @@
 package zaarour.dev.cashcard;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@WithMockUser(username = "sarah1")
+@WithMockUser(username = "sarah1", authorities = {"SCOPE_cashcard:read"})
 @AutoConfigureMockMvc
 class CashCardApplicationTests {
 
@@ -27,6 +28,7 @@ class CashCardApplicationTests {
 	private MockMvc mvc;
 
 	@Test
+	@DisplayName("Verify retrieval of a saved cash card")
 	void shouldReturnACashCardWhenDataIsSaved() throws Exception {
 		this.mvc.perform(get("/cashcards/99"))
 				.andExpect(status().isOk())
@@ -34,8 +36,10 @@ class CashCardApplicationTests {
 				.andExpect(jsonPath("$.owner").value("sarah1"));
 	}
 
+	@WithMockUser(username="esuez5", authorities = {"SCOPE_cashcard:read", "SCOPE_cashcard:write"})
 	@Test
 	@DirtiesContext
+	@DisplayName("Verify creation of a new cash card")
 	void shouldCreateANewCashCard() throws Exception {
 		String location = this.mvc.perform(post("/cashcards")
 						.with(csrf())// Ensure CSRF token is included
@@ -52,10 +56,11 @@ class CashCardApplicationTests {
 		this.mvc.perform(get(location))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.amount").value(250.00))
-				.andExpect(jsonPath("$.owner").value("sarah1"));
+				.andExpect(jsonPath("$.owner").value("esuez5"));
 	}
 
 	@Test
+	@DisplayName("Verify retrieval of all cash cards")
 	void shouldReturnAllCashCardsWhenListIsRequested() throws Exception {
 		this.mvc.perform(get("/cashcards"))
 				.andExpect(status().isOk())
