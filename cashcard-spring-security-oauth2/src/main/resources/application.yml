@@ -6,7 +6,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          public-key-location: classpath:authz.pub
+          issuer-uri: http://localhost:9000 # tell our application where the Authorization Server is running.
           audiences: cashcard-client #  ensure that each JWT contains an aud claim with a value of cashcard-client.
 
 logging:

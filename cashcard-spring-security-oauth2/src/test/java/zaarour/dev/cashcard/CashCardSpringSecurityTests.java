@@ -46,6 +46,7 @@ public class CashCardSpringSecurityTests {
         return mint(consumer -> {});
     }
 
+    // In real scenario, Authorization Server will mint the tokens instead.
     private String mint(Consumer<JwtClaimsSet.Builder> consumer) {
         JwtClaimsSet.Builder builder = JwtClaimsSet.builder()
                 .issuedAt(Instant.now())
