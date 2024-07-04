@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PostAuthorize;
 
 /**
  * The cash card REST API
@@ -29,6 +30,12 @@ public class CashCardController {
         this.cashCards = cashCards;
     }
 
+    /*
+    * if the owner CashCard returned object doesn't match the user requesting it,
+    * Spring Security will throw an AccessDeniedException.
+    *
+    * */
+    @PostAuthorize("returnObject.body.owner == authentication.name")
     @GetMapping("/{requestedId}")
     public ResponseEntity<CashCard> findById(@PathVariable Long requestedId) {
         return this.cashCards.findById(requestedId)

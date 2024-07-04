@@ -5,11 +5,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 
 @Configuration
+@EnableMethodSecurity
 public class CachCardSecurityConfig {
 
+    /*
+    * If the request is GET /cashcards, require read access;
+    * else if it's any other /cashcards request, require write access;
+    * at least require authentication for any other request.
+    *
+    * */
     @Bean
     SecurityFilterChain appSecurity(HttpSecurity http, CachCardAuthenticationEntryPoint entryPoint) throws Exception {
         http.authorizeHttpRequests(authorize ->

@@ -6,8 +6,14 @@ the development of secure REST APIs using the OAuth 2.0 authorization protocol.
 
 ### GET One Cash Card by ID
 
+Status should be: **200**
 ```shell
-curl -H "Authorization: Bearer $READ_ONLY_TOKEN" "http://localhost:8081/cashcards/1"
+curl -H "Authorization: Bearer $SARAH_TOKEN" "http://localhost:8081/cashcards/99"
+```
+
+Status should be: **403**
+```shell
+curl -H "Authorization: Bearer $ESUEZ_TOKEN" "http://localhost:8081/cashcards/99"
 ```
 
 ### GET All Cash Cards

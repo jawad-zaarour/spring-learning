@@ -67,4 +67,12 @@ class CashCardApplicationTests {
 				.andExpect(jsonPath("$.length()").value(2))
 				.andExpect(jsonPath("$..owner").value(everyItem(equalTo("sarah1"))));
 	}
+
+	@WithMockUser(username = "esuez5", authorities = {"SCOPE_cashcard:read"})
+	@Test
+	@DisplayName("Verify forbidden access when card belongs to someone else")
+	void shouldReturnForbiddenWhenCardBelongsToSomeoneElse() throws Exception {
+		this.mvc.perform(get("/cashcards/99"))
+				.andExpect(status().isForbidden());
+	}
 }
