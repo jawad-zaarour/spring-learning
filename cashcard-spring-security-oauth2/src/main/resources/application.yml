@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000 # tell our application where the Authorization Server is running.
+          audiences: cashcard-client #  ensure that each JWT contains an aud claim with a value of cashcard-client.
+
+logging:
+  level:
+    org.springframework.security: TRACE
