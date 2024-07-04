@@ -3,8 +3,7 @@ package zaarour.dev.cashcard;
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.access.prepost.PostAuthorize;
 
 /**
  * The cash card REST API
@@ -44,7 +41,7 @@ public class CashCardController {
     }
 
     @PostMapping
-    private ResponseEntity<CashCard> createCashCard(@RequestBody CashCardRequest cashCardRequest, UriComponentsBuilder ucb
+    public ResponseEntity<CashCard> createCashCard(@RequestBody CashCardRequest cashCardRequest, UriComponentsBuilder ucb
             , @CurrentOwner String owner) {
         CashCard cashCard = new CashCard(cashCardRequest.amount(), owner);
         CashCard savedCashCard = this.cashCards.save(cashCard);
@@ -57,6 +54,6 @@ public class CashCardController {
 
     @GetMapping
     public ResponseEntity<Iterable<CashCard>> findAll() {
-        return ResponseEntity.ok(cashCards.findAll());
+        return ResponseEntity.ok(this.cashCards.findAll());
     }
 }

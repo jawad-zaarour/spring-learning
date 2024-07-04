@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @Configuration
 @EnableMethodSecurity
-public class CachCardSecurityConfig {
+public class CashCardSecurityConfig {
 
     /*
     * If the request is GET /cashcards, require read access;
